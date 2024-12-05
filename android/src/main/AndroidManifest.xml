@@ -1,0 +1,27 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="tech.thispage.player_notification">
+    
+    <!-- 申请使用前台服务的权限 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <!-- 申请发送通知的权限 -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <!-- 申请使用系统警报窗口的权限 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <!-- 申请使用状态栏的权限 -->
+    <uses-permission android:name="android.permission.STATUS_BAR"/>
+    <!-- 申请使用前台服务进行媒体播放的权限 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
+    <!-- 申请使用唤醒锁的权限 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    
+    <application>
+        <!-- 定义PlayerNotificationService服务 -->
+        <service 
+            android:name=".PlayerNotificationService"
+            android:foregroundServiceType="mediaPlayback"
+            android:enabled="true"
+            android:exported="false"
+            android:stopWithTask="false"/>
+    </application>
+
+</manifest>

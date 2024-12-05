@@ -1,0 +1,108 @@
+// 定义项目的组名和版本号
+group = "tech.thispage.player_notification"
+version = "1.0-SNAPSHOT"
+
+// 构建脚本配置块，用于配置构建过程
+buildscript {
+    // 定义 Kotlin 版本变量
+    ext.kotlin_version = "1.8.22"
+
+    // 配置构建脚本的依赖仓库
+    repositories {
+        google()  // Google 的 Maven 仓库
+        mavenCentral()  // Maven 中央仓库
+    }
+
+    // 构建脚本依赖
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.1.0")  // Android Gradle 插件
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")  // Kotlin Gradle 插件
+    }
+}
+
+// 为所有项目配置依赖仓库
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+// 应用 Android 库插件和 Kotlin Android 插件
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+// Android 构建配置
+android {
+    // 如果支持 namespace 属性，则设置命名空间
+    if (project.android.hasProperty("namespace")) {
+        namespace = "tech.thispage.player_notification"
+    }
+
+    // 设置编译 SDK 版本为 34
+    compileSdk = 34
+
+    // 配置 Java 编译选项
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8  // 源代码兼容性
+        targetCompatibility = JavaVersion.VERSION_1_8  // 目标字节码兼容性
+    }
+
+    // 配置 Kotlin 编译选项
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8  // 指定目标 JVM 版本
+    }
+
+    // 配置源代码集
+    sourceSets {
+        main.java.srcDirs += "src/main/kotlin"  // 添加 Kotlin 源代码目录
+        test.java.srcDirs += "src/test/kotlin"  // 添加 Kotlin 测试代码目录
+    }
+
+    // 默认配置
+    defaultConfig {
+        minSdk = 21  // 最低支持的 Android SDK 版本
+    }
+
+    // 项目依赖配置
+    dependencies {
+        // 版本常量定义
+        def core_version = "1.9.0"
+        def media_version = "1.6.0"
+        def lifecycle_version = "2.6.1"
+
+        // 核心依赖
+        implementation "androidx.core:core-ktx:$core_version"  // Android KTX 核心库
+        implementation "androidx.media:media:$media_version"   // 媒体控制和通知支持
+
+        // 生命周期组件
+        implementation "androidx.lifecycle:lifecycle-service:$lifecycle_version"  // 生命周期感知服务
+
+        // 可选依赖 - 根据实际需要启用
+        // implementation "androidx.appcompat:appcompat:1.6.1"  // 已由 Flutter 提供
+        // implementation "com.google.android.material:material:1.9.0"  // 已由 Flutter 提供
+        // implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"  // 已由 Flutter 提供
+        // implementation "androidx.annotation:annotation:1.5.0"  // 包含在其他依赖中
+
+        // 异步操作支持 - 如果需要在原生代码中使用协程
+        implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+
+        // 测试依赖
+        testImplementation "org.jetbrains.kotlin:kotlin-test"
+        testImplementation "org.mockito:mockito-core:5.0.0"
+    }
+
+    // 测试选项配置
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()  // 使用 JUnit Platform
+
+            // 配置测试日志
+            testLogging {
+               events "passed", "skipped", "failed", "standardOut", "standardError"  // 记录测试事件
+               outputs.upToDateWhen {false}  // 始终显示输出
+               showStandardStreams = true  // 显示标准输出流
+            }
+        }
+    }
+}

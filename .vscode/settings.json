@@ -1,0 +1,15 @@
+{
+    "kotlin.languageServer.enabled": true,
+    "kotlin.debugAdapter.enabled": true,
+    "kotlin.trace.server": "messages",
+    "kotlin.completion.snippets.enabled": true,
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "files.autoSave": "afterDelay",
+    "editor.suggestSelection": "first",
+    "kotlin.compiler.jvm.target": "1.8",
+    "kotlin.completion.enabled": true,
+    "kotlin.diagnostics.enabled": true,
+    "kotlin.snippets.enabled": true,
+    "kotlin.debounceTime": 300,
+    "java.compile.nullAnalysis.mode": "automatic"
+}
